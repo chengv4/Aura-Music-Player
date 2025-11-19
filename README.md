@@ -1,6 +1,11 @@
 # Music Player browser 扩展
+[中文](README.md) | [English](README_EN.md)
 
 一个基于 React 开发的 浏览器 扩展程序，用于播放在线音乐。
+
+
+![插件管理](screenshots/plugin-set-view.gif)
+*支持自定义插件【可进行扩展】*
 
 ![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
 
@@ -12,8 +17,6 @@
 ![搜索结果](screenshots/search-results.gif)
 *音乐搜索功能*
 
-![插件管理](screenshots/plugin-set-view.gif)
-*支持自定义插件【可进行扩展】*
 
 ## 功能特性
 
