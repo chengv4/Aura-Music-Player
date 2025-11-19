@@ -3,18 +3,21 @@
 
 一个基于 React 开发的 浏览器 扩展程序，用于播放在线音乐。
 
-
-![插件管理](screenshots/plugin-set-view.gif)
-*支持自定义插件【可进行扩展】*
-
 ![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
 
 ## 截图展示
 
-![音乐播放器界面](screenshots/player-interface.png)
+
+![插件管理](screenshots/plugin-set-view.gif)  
+
+*支持自定义插件【可进行扩展】*
+
+![音乐播放器界面](screenshots/player-interface.png)  
+
 *主播放器界面，包含音乐控制功能*
 
-![搜索结果](screenshots/search-results.gif)
+![搜索结果](screenshots/search-results.gif)  
+
 *音乐搜索功能*
 
 

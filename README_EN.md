@@ -3,18 +3,20 @@
 
 A browser extension developed with React for playing online music.
 
-
-![Plugins Management](screenshots/plugin-set-view.gif)
-*Support custom plugins*
-
 ![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
 
 ## Screenshots
 
-![Music Player Interface](screenshots/player-interface.png)
+![Plugins Management](screenshots/plugin-set-view.gif)  
+
+*Support custom plugins*
+
+![Music Player Interface](screenshots/player-interface.png)  
+
 *Main player interface with music controls*
 
-![Search Results](screenshots/search-results.gif)
+![Search Results](screenshots/search-results.gif)  
+
 *Searching for music across multiple platforms*
 
 
