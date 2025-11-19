@@ -17,12 +17,15 @@
     "aura-music-player",
     "chrome-extension",
     "music-player",
-    "online-music",
     "react",
     "webpack",
     "javascript",
     "media-player",
-    "audio-player"
+    "audio-player",
+    "网易云音乐",
+    "酷狗音乐",
+    "网易云音乐",
+    "酷我音乐"
   ],
   "dependencies": {
     "localforage": "^1.10.0",
