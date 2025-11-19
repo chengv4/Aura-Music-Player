@@ -1,107 +1,105 @@
-# Music Player browser Extension
+# Music Player browser 扩展
 
-A browser extension developed with React for playing online music.
+一个基于 React 开发的 浏览器 扩展程序，用于播放在线音乐。
 
 ![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
 
-## Screenshots
+## 截图展示
 
-![Music Player Interface](screenshots/player-interface.png)
-*Main player interface with music controls*
+![音乐播放器界面](screenshots/player-interface.png)
+*主播放器界面，包含音乐控制功能*
 
-![Search Results](screenshots/search-results.gif)
-*Searching for music across multiple platforms*
+![搜索结果](screenshots/search-results.gif)
+*音乐搜索功能*
 
-![Plugins Management](screenshots/plugin-set-view.gif)
-*Support custom plugins*
+![插件管理](screenshots/plugin-set-view.gif)
+*支持自定义插件【可进行扩展】*
 
-## Features
+## 功能特性
 
-- Multi-platform music support: Supports Netease, Kugou, Kuwo, and Maoer FM
-- Online music search: Search music by keywords
-- Playback controls: Play/pause, next/previous track, volume control, progress adjustment
-- Playlist management: Add to playlist, favorite songs
-- Loop modes: Single loop, list loop, shuffle playback
-- Plugin management: Dynamically load and switch between different music platform plugins
+- 多平台音乐支持：支持网易云、酷狗音乐、酷我音乐和猫耳FM
+- 在线音乐搜索：可以根据关键词搜索音乐
+- 播放控制：播放/暂停、上一首/下一首、音量调节、进度控制
+- 播放列表管理：添加到播放列表、收藏歌曲
+- 循环模式：单曲循环、列表循环、随机播放
+- 插件管理：可以动态加载和切换不同的音乐平台插件
 
-## Install Dependencies (recommend pnpm)
-
-```bash
-npm install
-```
-
-## Development Mode
-
-There are two ways to develop:
-
-### Method: Development Server 
-
-Start a development server and open a browser window:
+## 安装依赖 (推荐使用 pnpm)
 
 ```bash
-npm start 
+npm install 
 ```
 
-## Build Production Version
+## 开发模式
 
-To build the production version of the extension, run:
+有两种方式进行开发：
+
+### 方式：实时监听构建（推荐）
+
+此方式会在文件发生变化时自动构建到 build 目录：
+
+
+
+## 构建生产版本
+
+要构建生产版本的扩展程序，请运行：
 
 ```bash
 npm run build
 ```
 
-The built files will be saved in the build directory.
+构建后的文件将保存在 build 目录中。
 
-## Load Extension to Chrome
+## 加载扩展程序到 Chrome
 
-1. Open `chrome://extensions/` in Chrome browser
-2. Enable "Developer mode" in the top right corner
-3. Click "Load unpacked"
-4. Select the build directory in the project
+1. 在 Chrome 浏览器中打开 `chrome://extensions/`
+2. 启用右上角的"开发者模式"
+3. 点击"加载已解压的扩展程序"
+4. 选择项目中的 build 目录
 
-## Usage
+## 使用说明
 
-1. After installing the extension, an icon will appear in the Chrome toolbar
-2. Click the icon to open the music player
-3. Select the music platform through the tabs at the top
-4. You can search for music through the search box, or browse charts and playlists
-5. Click on a song to play it, and control playback through the player at the bottom
+1. 安装扩展后，在 Chrome 浏览器工具栏中会出现扩展图标
+2. 点击图标打开音乐播放器
+3. 通过顶部的标签页选择音乐平台
+4. 可以通过搜索框搜索音乐，或者浏览排行榜和歌单
+5. 点击歌曲即可播放，可以通过底部播放器控制播放
 
-## Tech Stack
+## 技术栈
 
-- React 18: For building user interfaces
-- Webpack: Module bundler
-- Babel: JavaScript compiler
-- localForage: Offline storage solution
-- HTML5 Audio API: For audio playback
+- React 18：用于构建用户界面
+- Webpack：模块打包工具
+- Babel：JavaScript 编译器
+- localForage：离线存储解决方案
+- HTML5 Audio API：用于音频播放
 
-## Project Structure
+## 项目结构
 
 ```
-Aura-Music-Player/
-├── public/                   # Public resource directory
-│   ├── js/                   # JavaScript files
-│   └── index.html            # Main page template
-├── scripts/                  # Build scripts
-├── src/                      # React source code
-│   ├── assets/               # Static resources
-│   ├── components/           # React components
-│   ├── hooks/                # Custom React Hooks
-│   ├── utils/                # Utility functions
-│   ├── App.css               # Main app styles
-│   ├── App.js                # Main app component
-│   ├── MusicContext.js       # Music state management
-│   ├── index.css             # Global styles
-│   └── index.js              # Application entry point
-├── README_ZH.md              # Chinese README
-├── background.js             # Extension background script
-├── manifest.json             # Extension configuration file
-├── package.json              # Project configuration and dependencies
-└── webpack.config.js         # Webpack configuration file
+music-react/
+├── public/                   # 公共资源目录
+│   ├── js/                   # JavaScript 文件
+│   └── index.html            # 主页面模板
+├── scripts/                  # 构建脚本
+├── src/                      # React 源代码
+│   ├── assets/               # 静态资源
+│   ├── components/           # React 组件
+│   ├── hooks/                # 自定义 React Hooks
+│   ├── utils/                # 工具函数
+│   ├── App.css               # 主应用样式
+│   ├── App.js                # 主应用组件
+│   ├── MusicContext.js       # 音乐状态管理
+│   ├── index.css             # 全局样式
+│   └── index.js              # 应用入口文件
+├── README.md                 # 英文说明文件
+├── background.js             # 扩展后台脚本
+├── manifest.json             # 扩展配置文件
+├── package.json              # 项目配置和依赖
+└── webpack.config.js         # Webpack 配置文件
 ```
 
-## License
+## 开源许可证
 
-This project is licensed under the AGPL-3.0 License. See the [LICENSE](./LICENSE) file for details.
+本项目采用 AGPL-3.0 许可证，详细信息请参阅 [LICENSE](./LICENSE) 文件。
 
-Under the AGPL-3.0 License, commercial use of this project is prohibited. If you would like to obtain a commercial use license, please contact the project maintainer.
+根据 AGPL-3.0 许可证的规定，禁止将本项目用于商业用途。如果您想获得商业使用许可，请联系项目维护者。
