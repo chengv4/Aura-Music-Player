@@ -38,7 +38,9 @@ npm install
 
 此方式会在文件发生变化时自动构建到 build 目录：
 
-
+```bash
+npm start 
+```
 
 ## 构建生产版本
 
