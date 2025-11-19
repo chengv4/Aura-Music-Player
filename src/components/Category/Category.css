@@ -1,0 +1,42 @@
+.category-container {
+  background: #181818;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  overflow-x: auto;
+}
+
+.category-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.category-container::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 2px;
+}
+
+.category-tags {
+  display: flex;
+  padding: 4px;
+  min-width: max-content;
+}
+
+.category-tag {
+  padding: 4px 8px;
+  margin-right: 8px;
+  background: #282828;
+  border-radius: 10px;
+  color: #aaa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.category-tag:hover {
+  background: #333;
+  color: #fff;
+}
+
+.category-tag.active {
+  background: #1db954;
+  color: #fff;
+}

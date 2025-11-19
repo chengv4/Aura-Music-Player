@@ -1,0 +1,62 @@
+.plugin-tabs-container {
+  background-color: #1e1e1e;
+  padding: 8px 6px;
+  border-bottom: 1px solid #333;
+}
+
+.plugin-tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+  gap: 4px;
+}
+
+.plugin-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.plugin-tab {
+  background: #2d2d2d;
+  border: none;
+  color: #aaa;
+  padding: 4px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  min-width: fit-content;
+  height: 24px;
+}
+
+.plugin-tab:hover {
+  background-color: #3d3d3d;
+  color: #fff;
+}
+
+.plugin-tab.active {
+  background: #1db954;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(29, 185, 84, 0.3);
+}
+
+.plugin-svg-btn {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  margin-left: auto; /* 将按钮推到最右边 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+}
+
+.plugin-svg-btn:hover {
+  background-color: #3d3d3d;
+  color: #fff;
+}
