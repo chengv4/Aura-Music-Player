@@ -551,27 +551,31 @@ function App() {
   useEffect(() => {
     const loadPlugins = async () => {
       setPluginsLoading(() => true);
-      console.log("加载插件模块1111:", pluginModules);
-      if (pluginModules?.ready !== false) {
-        // 使用Web Worker处理插件代码执行
-        const res = await loadPluginsFromWorker(pluginModules);
-        if (res.success) {
-          const plugins =
-            Object.values(pluginModules)?.map((v) => ({
-              ...v,
-              code: null,
-            })) || [];
-          setPlugins(plugins);
-          // 默认激活第一个插件
-          if (plugins.length > 0 && !activePlugin?.id) {
-            setActivePlugin(plugins[0]);
+      try {
+        if (pluginModules?.ready !== false) {
+          // 使用Web Worker处理插件代码执行
+          const res = await loadPluginsFromWorker(pluginModules);
+          if (res.success) {
+            const plugins =
+              Object.values(pluginModules)?.map((v) => ({
+                ...v,
+                code: null,
+              })) || [];
+            setPlugins(plugins);
+            // 默认激活第一个插件
+            if (plugins.length > 0 && !activePlugin?.id) {
+              setActivePlugin(plugins[0]);
+            }
+          } else {
+            setShowSetPluginBtn(true);
+            console.log("插件加载失败");
           }
-        } else {
           setShowSetPluginBtn(true);
-          console.log("插件加载失败");
         }
+      } catch (error) {
         setShowSetPluginBtn(true);
       }
+
 
       setPluginsLoading(() => false);
     }
