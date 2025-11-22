@@ -8,6 +8,11 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  height: calc(100%);
+  overflow-y: auto;
+}
+.tracks-container.with-pagination {
+  height: calc(100% - 40px);
 }
 
 .track-item {
@@ -120,7 +125,7 @@
 .pagination {
   display: flex;
   justify-content: center;
-  padding: 12px 0;
+  padding-top: 6px;
   gap: 4px;
   flex-wrap: wrap;
 }

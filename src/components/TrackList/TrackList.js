@@ -18,6 +18,7 @@ const TrackList = ({
   pageSize = 10,
   currentTrack,
   isPlaying,
+  removeTrack
 }) => {
   const total = (playlist || []).length;
   const totalPages = Math.ceil(total / pageSize);
@@ -125,7 +126,7 @@ const TrackList = ({
 
   return (
     <div className="track-list">
-      <div className="tracks-container">
+      <div className={`tracks-container ${totalPages > 1 ? "with-pagination" : ""}`}>
         {(currentTracks || []).map((track, index) => (
           <div
             key={track.id}
@@ -193,6 +194,9 @@ const TrackList = ({
                   <PlayIcon />
                 </button>
               )}
+              {removeTrack && <button className="track-action-style" onClick={() => removeTrack(track)}>
+                ✕
+              </button>}
             </div>
           </div>
         ))}

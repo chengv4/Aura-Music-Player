@@ -27,6 +27,13 @@ const useMusicSource = () => {
       if (track.url) {
         return track.url;
       }
+      if (track?.handle) {
+        // 通过句柄获取文件
+        const fileHandle = await track.handle;
+        const file = await fileHandle.getFile();
+        const fileUrl = URL.createObjectURL(file);
+        return fileUrl;
+      }
 
       // 如果没有url属性且没有插件，无法获取链接
       if (!activePlugin) {

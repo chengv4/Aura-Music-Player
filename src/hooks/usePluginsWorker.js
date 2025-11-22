@@ -62,7 +62,7 @@ const usePluginsWorker = () => {
       // 设置第一层分类数据，并添加固定的"收藏"分类
       const categoriesWithFavorites = [
         ...categoryList,
-        { title: "收藏", id: "favorites", isFavorites: true },
+        // { title: "收藏", id: "favorites", isFavorites: true },
       ];
 
       setCategories(categoriesWithFavorites);

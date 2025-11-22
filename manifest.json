@@ -3,7 +3,7 @@
   "name": "Aura Music Player",
   "version": "1.0.0",
   "description": "一个用于播放在线音乐的浏览器扩展程序",
-  "permissions": ["storage", "activeTab", "scripting", "tabs", "windows"],
+  "permissions": ["storage", "activeTab", "scripting", "tabs", "windows", "fileSystem"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_icon": "icons/simple-music-logo.png"

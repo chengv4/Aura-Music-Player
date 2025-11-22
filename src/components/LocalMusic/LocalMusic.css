@@ -1,0 +1,72 @@
+.local-music {
+  /* padding: 20px; */
+  /* color: #333; */
+}
+
+.local-music-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.local-music-header h2 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.local-music-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.local-music-controls .btn {
+  padding: 2px 4px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.select-files-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.select-files-btn:hover {
+  background-color: #0056b3;
+}
+
+.select-folder-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.select-folder-btn:hover {
+  background-color: #218838;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.empty-state p {
+  margin: 10px 0;
+}
+.local-music-list .track-list{
+  height: calc(100vh - 80px);
+}
+.with-player .local-music-list .track-list{
+  height: calc(100vh - 130px);
+}
+.local-music-list .tracks-container.with-pagination{
+  height: calc(100% - 40px);
+}

@@ -24,6 +24,8 @@ const initialState = {
   activeCategory: null,
   subCategories: [],
   activeSubCategory: null,
+  // Toast状态
+  toasts: [],
 };
 
 // Action 类型
@@ -44,6 +46,9 @@ const actionTypes = {
   SET_SUB_CATEGORIES: "SET_SUB_CATEGORIES",
   SET_ACTIVE_CATEGORY: "SET_ACTIVE_CATEGORY",
   SET_ACTIVE_SUB_CATEGORY: "SET_ACTIVE_SUB_CATEGORY",
+  // Toast相关actions
+  ADD_TOAST: "ADD_TOAST",
+  REMOVE_TOAST: "REMOVE_TOAST",
 };
 
 // Reducer
@@ -170,6 +175,19 @@ const musicReducer = (state, action) => {
         activeSubCategory: action.payload,
       };
 
+    // Toast相关reducers
+    case actionTypes.ADD_TOAST:
+      return {
+        ...state,
+        toasts: [...state.toasts, action.payload],
+      };
+
+    case actionTypes.REMOVE_TOAST:
+      return {
+        ...state,
+        toasts: state.toasts.filter(toast => toast.id !== action.payload),
+      };
+      
     default:
       return state;
   }
@@ -415,6 +433,44 @@ export const MusicProvider = ({ children }) => {
       }, timeout);
     });
   };
+  
+  // Toast相关方法
+  const showToast = useCallback((message, type = "info", duration = 3000) => {
+    const id = Date.now() + Math.random();
+    const toast = { id, message, type, duration };
+
+    dispatch({ type: actionTypes.ADD_TOAST, payload: toast });
+
+    // 自动移除提示
+    if (duration > 0) {
+      setTimeout(() => {
+        dispatch({ type: actionTypes.REMOVE_TOAST, payload: id });
+      }, duration);
+    }
+
+    return id;
+  }, []);
+
+  const removeToast = useCallback((id) => {
+    dispatch({ type: actionTypes.REMOVE_TOAST, payload: id });
+  }, []);
+
+  const showInfo = useCallback((message, duration) => {
+    return showToast(message, "info", duration);
+  }, [showToast]);
+
+  const showSuccess = useCallback((message, duration) => {
+    return showToast(message, "success", duration);
+  }, [showToast]);
+
+  const showWarning = useCallback((message, duration) => {
+    return showToast(message, "warning", duration);
+  }, [showToast]);
+
+  const showError = useCallback((message, duration) => {
+    return showToast(message, "error", duration);
+  }, [showToast]);
+  
   return (
     <MusicContext.Provider
       value={{
@@ -437,7 +493,14 @@ export const MusicProvider = ({ children }) => {
         setSubCategories,
         setActiveSubCategory,
         workerRef,
-        fetchDataFromWorker
+        fetchDataFromWorker,
+        // Toast相关方法
+        showToast,
+        removeToast,
+        showInfo,
+        showSuccess,
+        showWarning,
+        showError
       }}
     >
       {children}

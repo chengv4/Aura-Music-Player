@@ -262,7 +262,7 @@
   top: 0;
   right: 0;
   width: 60%;
-  height: calc(100vh - 68px);
+  height: calc(100vh - 60px);
   background: #231e1e;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
@@ -335,4 +335,7 @@
 
 .playlist-content::-webkit-scrollbar-thumb:hover {
   background: #888;
+}
+.player .tracks-container.with-pagination{
+  height: calc(100vh - 190px);
 }

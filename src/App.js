@@ -22,6 +22,7 @@ import useDisableDevTools from "@/hooks/useDisableDevTools";
 import usePluginsWorker from "@/hooks/usePluginsWorker";
 import SetPluginsModal from "@/components/SetPluginsModal";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import LocalMusic from "@/components/LocalMusic/LocalMusic";
 import "./App.css";
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
     setCurrentTrack,
     setPluginModules,
     pluginModules,
+    setCategories,
+    setActiveCategory
   } = useMusic();
   // 使用自定义hook禁用开发者工具
   useDisableDevTools();
@@ -259,7 +262,18 @@ function App() {
   useEffect(() => {
     setCurrentTrackPage(1);
     if (activePlugin) {
-      loadPluginCategoriesFromWorder(activePlugin);
+      // 特殊处理"我的音乐"插件
+      if (activePlugin.id === 'mymusic') {
+        // 设置固定的分类：本地和收藏
+        const myMusicCategories = [
+          { title: "收藏", id: "favorites", isFavorites: true },
+          { title: "本地", id: "local", isLocal: true },
+        ];
+        setCategories(myMusicCategories);
+        setActiveCategory(myMusicCategories[0]); // 默认激活"本地"分类
+      } else {
+        loadPluginCategoriesFromWorder(activePlugin);
+      }
       // 切换插件时返回到歌单列表视图
       setShowTracks(false);
     }
@@ -274,6 +288,7 @@ function App() {
     } else if (
       activeCategory &&
       !activeCategory.isFavorites &&
+      !activeCategory.isLocal && // 添加对本地分类的判断
       subCategories &&
       subCategories.length > 0 &&
       !activeSubCategory
@@ -281,6 +296,14 @@ function App() {
       setCurrentTrackPage(1);
       // 如果有子分类但没有激活的子分类，则激活第一个
       handleSubCategorySelectHook(subCategories[0]);
+    }
+    // 特殊处理"我的音乐"插件中的"本地"和"收藏"分类
+    else if (activeCategory && (activeCategory.isLocal || activeCategory.isFavorites) && activePlugin?.id === 'mymusic') {
+      if (activeCategory.isLocal) {
+        loadLocalTracks();
+      } else if (activeCategory.isFavorites) {
+        loadFavoriteTracks();
+      }
     }
   }, [
     activeSubCategory?.id,
@@ -343,6 +366,10 @@ function App() {
     if (activeCategory && activeCategory.isFavorites) {
       loadFavoriteTracks();
     }
+    // 特殊处理"我的音乐"插件中的"本地"分类
+    else if (activeCategory && activeCategory.isLocal) {
+      loadLocalTracks();
+    }
   }, [activeCategory]);
 
   // 加载收藏的歌曲
@@ -358,6 +385,27 @@ function App() {
       setShowTracks(true);
     } catch (error) {
       console.error("加载收藏歌曲失败:", error);
+      setMusicList([]);
+      setShowTracks(true);
+    }
+  };
+
+  // 加载本地歌曲
+  const loadLocalTracks = async () => {
+    try {
+      // 从本地存储中获取本地歌曲列表
+      const localTracks = await localforage.getItem("localTracks") || [];
+
+      // 创建一个虚拟的歌单来显示本地歌曲
+      const localSheet = {
+        musicList: localTracks,
+        title: "本地音乐",
+        id: "local",
+      };
+      setMusicList(localSheet.musicList || []);
+      setShowTracks(true);
+    } catch (error) {
+      console.error("加载本地歌曲失败:", error);
       setMusicList([]);
       setShowTracks(true);
     }
@@ -562,10 +610,6 @@ function App() {
                 code: null,
               })) || [];
             setPlugins(plugins);
-            // 默认激活第一个插件
-            if (plugins.length > 0 && !activePlugin?.id) {
-              setActivePlugin(plugins[0]);
-            }
           } else {
             setShowSetPluginBtn(true);
             console.log("插件加载失败");
@@ -635,12 +679,18 @@ function App() {
   };
   const handleCloseModal = () => {
     setShowPluginModal(false);
-    // window.location.reload();
   };
-
+  const customPlugins = useMemo(() => {
+    return plugins.concat({ id: 'mymusic', name: '我的音乐' });
+  }, [plugins]);
+  useEffect(() => {
+    if (customPlugins?.length) {
+      setActivePlugin(customPlugins[0]);
+    }
+  }, [customPlugins]);
   return (
     <div className="App">
-      <LoadingSpinner loading={pluginsLoading} />
+      {pluginsLoading && <LoadingSpinner loading={pluginsLoading} />}
       {showSetPluginBtn && (plugins.length === 0) && (
         <button
           className="plugin-settings-btn"
@@ -660,7 +710,7 @@ function App() {
         />
       )}
       <PluginTabs
-        plugins={plugins}
+        plugins={customPlugins}
         activePlugin={activePlugin}
         onPluginChange={handlePluginChange}
         onSetting={() => setShowPluginModal(true)}
@@ -675,61 +725,71 @@ function App() {
             />
           </div>
           <div className="category-main">
-            {!isFavoritesCategory && (
-              <MusicSearch onSearchResults={handleSearchResults} />
-            )}
-            {subCategories.length > 0 &&
-              !(searchKeyword && searchResults?.length > 0) && (
-                <Category
-                  subCategories={subCategories}
-                  activeSubCategory={activeSubCategory}
-                  onSubCategorySelect={handleSubCategorySelect}
-                />
-              )}
-            {!showTracks ? (
-              <SheetList
-                sheets={sheets}
-                onPlaySheet={handlePlaySheet}
-                loading={loading}
-                hasMore={hasMore}
-                onLoadMore={loadMoreSheets}
-                containerRef={sheetListContainerRef}
-                onScroll={handleScroll}
-              />
-            ) : (
-              <div className="track-list-container">
-                <div className="track-list-controls">
-                  {!isFavoritesCategory && sheets?.length > 0 && (
-                    <button
-                      className="back-button"
-                      onClick={() => {
-                        handleBackToSheets();
-                      }}
-                    >
-                      ← 返回歌单列表
-                    </button>
+            <>
+              {activeCategory?.isLocal ?
+                <LocalMusic
+                  onPlay={handlePlay}
+                  currentTrack={currentTrack}
+                  isPlaying={isPlaying}
+                  activePlugin={activePlugin} handlePlayAll={handlePlayAll} />
+                : <>
+                  {!isFavoritesCategory && (
+                    <MusicSearch onSearchResults={handleSearchResults} />
                   )}
-                  <button className="play-all-button" onClick={handlePlayAll}>
-                    ▶ 播放全部
-                  </button>
-                </div>
-                {isFavoritesCategory && musicList.length === 0 ? (
-                  <div className="empty-favorites">
-                    <p>暂无收藏歌曲</p>
-                  </div>
-                ) : (
-                  <TrackList
-                    playlist={currenMusicList}
-                    onPlay={handlePlay}
-                    onPageChange={handleTrackPageChange}
-                    currentPage={currentTrackPage}
-                    currentTrack={currentTrack}
-                    isPlaying={isPlaying}
-                    activePlugin={activePlugin}
-                  />
-                )}
-              </div>
-            )}
+                  {subCategories.length > 0 &&
+                    !(searchKeyword && searchResults?.length > 0) && (
+                      <Category
+                        subCategories={subCategories}
+                        activeSubCategory={activeSubCategory}
+                        onSubCategorySelect={handleSubCategorySelect}
+                      />
+                    )}
+                  {!showTracks ? (
+                    <SheetList
+                      sheets={sheets}
+                      onPlaySheet={handlePlaySheet}
+                      loading={loading}
+                      hasMore={hasMore}
+                      onLoadMore={loadMoreSheets}
+                      containerRef={sheetListContainerRef}
+                      onScroll={handleScroll}
+                    />
+                  ) : (
+                    <div className="track-list-container">
+                      <div className="track-list-controls">
+                        {!isFavoritesCategory && sheets?.length > 0 && (
+                          <button
+                            className="back-button"
+                            onClick={() => {
+                              handleBackToSheets();
+                            }}
+                          >
+                            ← 返回歌单列表
+                          </button>
+                        )}
+                        <button className="play-all-button" onClick={handlePlayAll}>
+                          ▶ 播放全部
+                        </button>
+                      </div>
+                      {isFavoritesCategory && musicList.length === 0 ? (
+                        <div className="empty-favorites">
+                          <p>暂无收藏歌曲</p>
+                        </div>
+                      ) : (
+                        <TrackList
+                          playlist={currenMusicList}
+                          onPlay={handlePlay}
+                          onPageChange={handleTrackPageChange}
+                          currentPage={currentTrackPage}
+                          currentTrack={currentTrack}
+                          isPlaying={isPlaying}
+                          activePlugin={activePlugin}
+                        />
+                      )}
+                    </div>
+                  )}
+                </>}
+            </>
           </div>
         </div>
       </main>
