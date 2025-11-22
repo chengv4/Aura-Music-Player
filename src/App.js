@@ -245,7 +245,7 @@ function App() {
         console.error("检查播放列表时出错:", error);
       }
     }
-  }, [playlist, currentTrack, pluginsLoaded]);
+  }, [playlist, pluginsLoaded]);
 
   // 处理插件切换
   const handlePluginChange = (plugin) => {
@@ -438,7 +438,6 @@ function App() {
   // 当前播放曲目或播放状态改变时控制音频播放
   useEffect(() => {
     if (!audioRef.current) return;
-
     const playTrack = async () => {
       if (currentTrack && isPlaying) {
         console.log(`开始播放: `, currentTrack);
@@ -486,9 +485,9 @@ function App() {
   };
 
   const handleClosePlayer = () => {
-    setCurrentTrack(null);
     setShowPlayer(false);
     setIsPlaying(false);
+    setCurrentTrack(null);
   };
 
   // 处理进度条点击事件
