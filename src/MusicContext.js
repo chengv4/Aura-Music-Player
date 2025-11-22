@@ -187,7 +187,7 @@ const musicReducer = (state, action) => {
         ...state,
         toasts: state.toasts.filter(toast => toast.id !== action.payload),
       };
-      
+
     default:
       return state;
   }
@@ -287,8 +287,8 @@ export const MusicProvider = ({ children }) => {
   };
 
   const setCurrentTrack = (track) => {
-    if (!track?.pluginId) {
-      track.pluginId = state.activePlugin?.id || null;
+    if (!track?.pluginId && track) {
+      track.pluginId = state.activePlugin?.id;
     }
     dispatch({ type: actionTypes.SET_CURRENT_TRACK, payload: track });
   };
@@ -433,7 +433,7 @@ export const MusicProvider = ({ children }) => {
       }, timeout);
     });
   };
-  
+
   // Toast相关方法
   const showToast = useCallback((message, type = "info", duration = 3000) => {
     const id = Date.now() + Math.random();
@@ -470,7 +470,7 @@ export const MusicProvider = ({ children }) => {
   const showError = useCallback((message, duration) => {
     return showToast(message, "error", duration);
   }, [showToast]);
-  
+
   return (
     <MusicContext.Provider
       value={{

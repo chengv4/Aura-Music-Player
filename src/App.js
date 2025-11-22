@@ -486,6 +486,7 @@ function App() {
   };
 
   const handleClosePlayer = () => {
+    setCurrentTrack(null);
     setShowPlayer(false);
     setIsPlaying(false);
   };
