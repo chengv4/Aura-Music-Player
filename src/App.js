@@ -768,7 +768,7 @@ function App() {
                             ← 返回歌单列表
                           </button>
                         )}
-                        <button className="play-all-button" onClick={handlePlayAll}>
+                        <button className="play-all-button" onClick={() => handlePlayAll(currenMusicList)}>
                           ▶ 播放全部
                         </button>
                       </div>
