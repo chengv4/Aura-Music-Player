@@ -270,7 +270,7 @@ function App() {
           { title: "本地", id: "local", isLocal: true },
         ];
         setCategories(myMusicCategories);
-        setActiveCategory(myMusicCategories[0]); // 默认激活"本地"分类
+        setActiveCategory(myMusicCategories[0]);
       } else {
         loadPluginCategoriesFromWorder(activePlugin);
       }
@@ -463,7 +463,7 @@ function App() {
     };
 
     playTrack();
-  }, [currentTrack, isPlaying, getMusicSource]);
+  }, [currentTrack, isPlaying]);
 
   const handlePlay = (track) => {
     // 如果点击的是当前正在播放的歌曲，则切换播放状态
