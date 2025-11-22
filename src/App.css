@@ -297,3 +297,7 @@ body {
 .empty-favorites{
   text-align: center;
 }
+.not-found-icon{
+  width: 100%;
+  height: 100%;
+}

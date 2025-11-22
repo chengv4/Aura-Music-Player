@@ -8,6 +8,7 @@ import {
   AddToPlaylistIcon,
   DownloadIcon,
   FavoriteIcon,
+  ImageNotFound
 } from "@/assets/svg";
 
 const TrackList = ({
@@ -138,12 +139,12 @@ const TrackList = ({
               {track.artwork ? (
                 <img src={track.artwork} alt={track.title} />
               ) : (
-                <div className="placeholder-cover"></div>
+                <ImageNotFound />
               )}
             </div>
             <div className="track-details">
               <div className="track-title">{track.title}</div>
-              <div className="track-artist">{track.artist}</div>
+              {track?.artist && <div className="track-artist">{track.artist}</div>}
             </div>
             <div className="track-actions">
               <button

@@ -57,7 +57,7 @@ const LocalMusic = (props) => {
   const getTrackData = (file, entry) => {
     return {
       id: `local-${file.name}-${file?.size}`,
-      artist: "-",
+      artist: "未知",
       title: file.name?.replace(/\.[^/.]+$/, ""),
       fileSize: file.size,
       lastModified: file.lastModified,
@@ -163,7 +163,7 @@ const LocalMusic = (props) => {
           <button className="btn select-folder-btn" onClick={handleFolderSelect}>
             选择文件夹
           </button>
-          <button className="play-all-button" onClick={handlePlayAll}>
+          <button className="play-all-button" onClick={() => handlePlayAll(tracks)}>
             ▶ 播放全部
           </button>
         </div>

@@ -505,7 +505,7 @@ function App() {
   };
 
   // 处理播放全部按钮点击事件
-  const handlePlayAll = useCallback(async () => {
+  const handlePlayAll = useCallback(async (list) => {
     if (!musicList || musicList.length === 0) {
       console.log("没有可播放的音乐");
       return;
@@ -517,7 +517,7 @@ function App() {
       //     !musicList.some((existingTrack) => existingTrack.id === newTrack.id)
       // );
       // 将新歌曲添加到现有播放列表的开头
-      const newPlaylist = [...musicList];
+      const newPlaylist = list || [...musicList];
       setPlaylist(newPlaylist);
 
       // 播放第一首新歌曲

@@ -14,6 +14,7 @@ import {
   LoopIcon,
   NextIcon,
   PrevIcon,
+  ImageNotFound
 } from "@/assets/svg";
 
 const Player = ({
@@ -223,7 +224,7 @@ const Player = ({
           {track?.artwork ? (
             <img src={track.artwork} alt={track.title} />
           ) : (
-            <div className="placeholder-art"></div>
+            <ImageNotFound />
           )}
         </div>
 
