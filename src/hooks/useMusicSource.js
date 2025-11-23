@@ -32,6 +32,7 @@ const useMusicSource = () => {
         const fileHandle = await track.handle;
         const file = await fileHandle.getFile();
         const fileUrl = URL.createObjectURL(file);
+        track.url = fileUrl;
         return fileUrl;
       }
 
